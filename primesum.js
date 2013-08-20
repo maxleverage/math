@@ -41,6 +41,6 @@ var sieve = function(n) {
     return output;
 };
 
-
+log(sieve(2e6));
 log(sum(sieve(2e6)));
 log(sum(sieve(2e7)));
