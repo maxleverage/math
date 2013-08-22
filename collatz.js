@@ -2,6 +2,7 @@
 
 var math = require('mathjs');
 var log = console.log;
+var fs = require('fs');
 
 // Number sequence generator
 var integer = function(n) {
@@ -55,8 +56,9 @@ var isearch = function(as) {
 // Testing
 
 log(colsearch(20));
-log(isearch(colsearch(1e6-1)));
+log(isearch(colsearch(1e6)));
 
+var outfile = "collatz.csv";
+var out = colsearch(1e4);
 
-	
-		
+fs.writeFileSync(outfile, out);

@@ -30,7 +30,7 @@ var triangle = function(n) {
 	return output;
 }
 
-// Factor search. Search up to sqrt(n)
+// Factor search. Search up to sqrt(n) where n is triangle number
 
 var fsearch = function(n) {
 	var output = [];
@@ -46,6 +46,7 @@ var fsearch = function(n) {
 };
 
 // Triangle number search; k denotes the number of characters
+
 var tsearch = function(k) {
 	var init = 1;
 	var output = 0;
