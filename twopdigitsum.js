@@ -16,8 +16,6 @@ var sum = function(as) {
 var power = function(base, k) {
 	var output = [base];
 	var temp = [];
-	var memory = [];
-	var comp = [];
 	var init = 1;
 	var index = 0;
 	while(init < k) {
