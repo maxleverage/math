@@ -64,7 +64,18 @@ var power = function(base, k) {
 	return output;
 }
 
-log(power(2,1e3));
-log(sum(power(2,1e3)));
+// Digit aggregator
+var agg = function(as) {
+	var output = as[as.length - 1].toString();
+	for(ii = (as.length - 2); ii >= 0; ii--) {
+		as[ii] = as[ii].toString()
+		output = output + as[ii];
+	}
+	return output;
+};
+
+
+log(agg(power(2,20000)));
+log(sum(power(2,20000)));
 				
 
