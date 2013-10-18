@@ -5,6 +5,7 @@ import math as m
 """ Prime Checker """
 
 def prime_checker(input_number):
+	""" Checks if a given input number n is prime """
 	divisors = []
 	for i in range(1, int(input_number ** 0.5)+1):
 		if input_number % i == 0:
@@ -16,7 +17,7 @@ def prime_checker(input_number):
 """ Digit Rotator """
 
 def digit_rotator(number):
-	""" Enumerates all possible digit rotations of given number n """
+	""" Enumerates all possible digit rotations of given number n. Outputs a list of n-1 rotated digits """
 	rotation_result = [number]
 	digit_length = len(list(str(number)))
 	old_digit = list(str(number))
@@ -50,7 +51,7 @@ def sieve(number_limit):
 """ Circular Checker for Primes """
 
 def circular_checker(number_limit):
-	""" Takes as input a set of primes below the given number limit """
+	""" Takes as input a set of primes below the given number limit and returns the length of the set of circular primes """
 	prime_space = sieve(number_limit)
 	search_space = set(prime_space)
 	for i in prime_space:
