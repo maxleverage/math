@@ -14,7 +14,7 @@ def curious_fraction(numerator, denominator):
 			for j in denominator:
 				numerator_cancel = [x for x in numerator if x != i]
 				denominator_cancel = [x for x in denominator if x != j]
-				if (float(j) > 0) and (numerator_cancel == denominator_cancel) and (float(i)/float(j) == initial_result):
+				if (numerator_cancel == denominator_cancel) and (float(i)/float(j) == initial_result):
 					output_result = str(i) + '/' + str(j)
 					return output_result
 					break
@@ -28,14 +28,11 @@ def curious_fraction(numerator, denominator):
 """ There are four curious fractions """
 
 start = time.time()
-exclusion_list = [10,20,30,40,50,60,70,80,90]
-exclusion_list_2 = [22,33,44,55,66,77,88,99]
+exclusion_list = [10,11,20,22,30,33,40,44,50,55,60,66,70,77,80,88,90,99]
 numerator_list = range(10,99)
 numerator_list = [x for x in numerator_list if x not in exclusion_list]
-numerator_list = [x for x in numerator_list if x not in exclusion_list_2]
 denominator_list = range(11,99)
 denominator_list = [x for x in denominator_list if x not in exclusion_list]
-denominator_list = [x for x in numerator_list if x not in exclusion_list_2]
 fraction_result = []
 for i in numerator_list:
 	for j in denominator_list:
