@@ -21,6 +21,7 @@ def sieve(number_limit):
 """ Cumulative Sum of Prime List """
 
 def cumulative_sum(prime_list):
+	""" Takes input as list of primes below limit derived from sieve function """
 	result = []
 	prime_sum = 0
 	for prime in prime_list:
@@ -31,6 +32,7 @@ def cumulative_sum(prime_list):
 """ Cumulative Sum Difference List """
 
 def difference_list(prime_sum_list, number_limit):
+	""" Cumulative prime sum list and the maximum number limit """
 	difference = []
 	prime_length = []
 	length = len(prime_sum_list)
@@ -45,7 +47,7 @@ def difference_list(prime_sum_list, number_limit):
 
 """ Energy Function """
 
-def compute_energy(input_prime, prime_sum_list, number_limit, difference, prime_position):
+def compute_energy(input_prime, prime_sum_list, difference, prime_position):
 	if input_prime in prime_sum_list:
 		return -prime_sum_list.index(input_prime) + 1
 	else:
@@ -60,17 +62,14 @@ def compute_energy(input_prime, prime_sum_list, number_limit, difference, prime_
 
 print "Running quantum annealing"
 
-def quantum_annealing_search(start_field_strength, field_strength_decay, width, max_limit, max_iter):
+def quantum_annealing_search(start_field_strength, field_strength_decay, width, max_iter, search_space, prime_sum_list, difference, primes):
 	start = time.time()
-	prime_list = sieve(max_limit)
-	prime_sum_list = cumulative_sum(prime_list)
-	difference, primes = difference_list(prime_sum_list, max_limit)
-	initial_state = prime_list[np.random.randint(0, len(prime_list))]
-	initial_energy = compute_energy(initial_state, prime_sum_list, max_limit, difference, primes)
+	initial_state = prime_list[np.random.randint(0, search_space)]
+	initial_energy = compute_energy(initial_state, prime_sum_list, difference, primes)
 	iter = 0
 	while iter < max_iter:
-		new_state = prime_list[np.random.randint(0, len(prime_list))]
-		new_energy = compute_energy(new_state, prime_sum_list, max_limit, difference, primes)
+		new_state = prime_list[np.random.randint(0, search_space)]
+		new_energy = compute_energy(new_state, prime_sum_list, difference, primes)
 		if new_energy < initial_energy:
 			initial_state = new_state
 			initial_energy = new_energy
@@ -88,9 +87,23 @@ def quantum_annealing_search(start_field_strength, field_strength_decay, width, 
 	finish_time = time.time() - start
 	return initial_state, -initial_energy, finish_time
 
+max_limit = int(raw_input('Enter maximum search limit: '))
+start_field_strength = float(raw_input('Enter quantum field strength: '))
+field_strength_decay = float(raw_input('Enter field strength decay: '))
+width = float(raw_input('Enter average hill width: '))
+max_iter = int(raw_input('Enter maximum number of iterations: '))
+counter_limit = int(raw_input('Enter quantum annealing limit: '))
+
+prime_list = sieve(max_limit)
+search_space = len(prime_list)
+prime_sum_list = cumulative_sum(prime_list)
+difference, primes = difference_list(prime_sum_list, max_limit)
+prime_sum_list = [x for x in prime_sum_list if x <= max_limit]
+
+print "Starting quantum annealing runs"
 counter = 0
-while counter < 50:
-	print quantum_annealing_search(100,0.06,5,100000,1000)
+while counter < counter_limit:
+	print quantum_annealing_search(start_field_strength, field_strength_decay, width, max_iter, search_space, prime_sum_list, difference, primes)
 	counter += 1
 
 
