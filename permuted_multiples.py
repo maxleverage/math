@@ -4,11 +4,6 @@ import math as m
 import numpy as np
 import time
 
-""" Flexible set generator """
-
-def set_generator(set_length):
-	return {x for x in range(set_length)}
-
 """ Digit set checker """
 
 def digit_checker(input_number, number_product):
