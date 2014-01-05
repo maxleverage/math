@@ -62,6 +62,7 @@ def compute_energy(input_prime, prime_sum_list, difference, prime_position):
 
 print "Running quantum annealing"
 
+"""
 def quantum_annealing_search(start_field_strength, field_strength_decay, width, max_iter, search_space, prime_sum_list, difference, primes):
 	start = time.time()
 	initial_state = prime_list[np.random.randint(0, search_space)]
@@ -87,6 +88,39 @@ def quantum_annealing_search(start_field_strength, field_strength_decay, width, 
 	finish_time = time.time() - start
 	return initial_state, -initial_energy, finish_time
 
+"""
+
+def quantum_annealing_search(start_field_strength, field_strength_decay, width, max_iter, search_space, prime_sum_list, difference, primes):
+	start = time.time()
+	initial_state = prime_list[np.random.randint(0, search_space)]
+	initial_energy = compute_energy(initial_state, prime_sum_list, difference, primes)
+	exclusion_list = []
+	iter = 0
+	while iter < max_iter:
+		new_state = prime_list[np.random.randint(0, search_space)]
+		new_energy = compute_energy(new_state, prime_sum_list, difference, primes)
+		""" Exclusion list for tried solutions """
+		while new_state in exclusion_list:
+			new_state = prime_list[np.random.randint(0, search_space)]
+			new_energy = compute_energy(new_state, prime_sum_list, difference, primes)
+		if new_energy < initial_energy:
+			initial_state = new_state
+			initial_energy = new_energy
+			start_field_strength = 1 - field_strength_decay
+		elif new_energy == initial_energy:
+			start_field_strength = start_field_strength * (1 - field_strength_decay/5)
+		elif new_energy > initial_energy:
+			if np.exp(-((new_energy - initial_energy) ** 0.5) * width / start_field_strength) > np.random.random():
+				initial_energy = new_energy
+				initial_state = new_state
+				start_field_strength = 1 - field_strength_decay
+			else:
+				start_field_strength = start_field_strength * (1 - field_strength_decay / 5)
+		iter += 1
+	finish_time = time.time() - start
+	return initial_state, -initial_energy, finish_time
+
+
 max_limit = int(raw_input('Enter maximum search limit: '))
 start_field_strength = float(raw_input('Enter quantum field strength: '))
 field_strength_decay = float(raw_input('Enter field strength decay: '))
@@ -101,6 +135,7 @@ difference, primes = difference_list(prime_sum_list, max_limit)
 prime_sum_list = [x for x in prime_sum_list if x <= max_limit]
 
 print "Starting quantum annealing runs"
+
 counter = 0
 while counter < counter_limit:
 	print quantum_annealing_search(start_field_strength, field_strength_decay, width, max_iter, search_space, prime_sum_list, difference, primes)
