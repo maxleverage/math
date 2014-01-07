@@ -20,7 +20,7 @@ print "Performing dictionary search"
 
 start_time = time.time()
 cubes_sorted = {}
-for i in xrange(1,10000):
+for i in xrange(345,10000):
 	cube = str(i ** 3)
 	cubes_sorted[cube] = cubic_sort(cube) # Key / value assignment
 cube_values = cubes_sorted.values()
