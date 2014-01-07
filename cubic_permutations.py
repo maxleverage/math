@@ -3,42 +3,35 @@
 import math as m
 import numpy as np
 import time
-from itertools import permutations
 
-""" Cube Root Function """
+""" Cubic Value Sort """
 
-def isCube(number, epsilon):
-	cube_root = number ** (1/3.0)
-	if m.ceil(cube_root) - cube_root < epsilon: return True
-	else: return False
+def cubic_sort(cube):
+	cube_string = [x for x in cube]
+	cube_string.sort()
+	cube_out = ""
+	for digit in cube_string:
+		cube_out += digit
+	return cube_out
 
-""" Search for 5 Family Permuted Cube """
+""" Dictionary Search """
 
-print "Searching for 5 member cube family"
+print "Performing dictionary search"
 
 start_time = time.time()
-number = 345
-found = False
-while not found:
-	cube_number = number ** 3
-	cube_length = len(str(cube_number))
-	counter = 0
-	permuted_set = set()
-	for perm in permutations(str(cube_number)):
-		permuted_cube = ''
-		for element in perm:
-			permuted_cube += element
-		if len(str(int(permuted_cube))) == cube_length:
-			permuted_set.add(int(permuted_cube))
-	for cube in permuted_set:
-		if isCube(cube, 1e-12):
-			counter += 1
-	if counter == 5:
-		found = True
-		break
-	print number
-	number += 1
+cubes_sorted = {}
+for i in xrange(1,10000):
+	cube = str(i ** 3)
+	cubes_sorted[cube] = cubic_sort(cube) # Key / value assignment
+cube_values = cubes_sorted.values()
+cube_keys = cubes_sorted.keys()
+cube_keys.sort()
+cube_candidates = []
+for k in cube_keys:
+	if cube_values.count(cubes_sorted[k]) == 5:
+			cube_candidates.append(int(k))
 
+answer = min(cube_candidates)
 finish_time = time.time() - start_time
 
-print "The smallest cube to generate a 5 member permuted cube family is %i. It took %f seconds to find the solution." % (cube_number, finish_time)
+print "The minimum cube which generates a 5 member permuted cube family is %i. It took %f seconds to find the solution." % (answer, finish_time)
