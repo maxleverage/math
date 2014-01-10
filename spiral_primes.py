@@ -28,9 +28,8 @@ def isPrime(n, max_iter):
 	if n < 2: return False
 	k = 0
 	s, d = decompose(n - 1)
-	k = 0
 	while k < max_iter:
-		x = np.random.randint(2, n - 1)
+		x = np.random.randint(2, n - 2)
 		if isWitness(x, n, s, d):
 			return False
 		k += 1
