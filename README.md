@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-math
+Math
 ====
 
 Scripts for Project Euler problems
